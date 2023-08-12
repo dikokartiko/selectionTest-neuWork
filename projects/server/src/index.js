@@ -2,8 +2,12 @@ require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
 const { join } = require("path");
+const dotenv = require("dotenv");
+const { sequelize } = require("./models");
 
-const PORT = process.env.PORT || 8000;
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(
   cors({
@@ -62,6 +66,9 @@ app.use(express.static(join(__dirname, clientPath)));
 app.get("*", (req, res) => {
   res.sendFile(join(__dirname, clientPath, "index.html"));
 });
+
+// Sync database
+sequelize.sync({ alter: true });
 
 //#endregion
 
