@@ -1,3 +1,4 @@
+//helpers/mailer.js
 const nodemailer = require("nodemailer");
 
 const sendMail = (to, subject, text) => {

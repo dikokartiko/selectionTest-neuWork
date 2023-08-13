@@ -1,3 +1,4 @@
+//middleware/register.js
 const { check } = require("express-validator");
 
 const registerValidation = [
@@ -20,7 +21,7 @@ const registerValidation = [
   check("phoneNumber")
     .isMobilePhone()
     .withMessage("Phone number must be a valid mobile phone number"),
-  check("salary")
+  check("salaryAmount")
     .isInt({ min: 0 })
     .withMessage("Salary must be a non-negative integer"),
   check("status").isBoolean().withMessage("Status must be a boolean value"),
