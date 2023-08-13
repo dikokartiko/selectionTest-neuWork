@@ -20,5 +20,5 @@ router.patch("/reset-password/:token", passwordValidation, resetPassword);
 
 router.patch("/set-salary/:userId", isAdmin, setSalary);
 
-router.get("/keep-login", keepLogin);
+router.get("/", keepLogin);
 module.exports = router;
