@@ -2,22 +2,28 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Payrolls", {
-      payrollId: {
+    await queryInterface.createTable("Schedules", {
+      scheduleId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      deductionName: {
-        type: Sequelize.STRING,
+      clockIn: {
+        type: Sequelize.TIME,
         allowNull: false,
       },
-      deductionTotal: {
-        type: Sequelize.INTEGER,
+      clockOut: {
+        type: Sequelize.TIME,
         allowNull: false,
       },
-      payday: {
-        type: Sequelize.DATEONLY,
+      workday: {
+        type: Sequelize.ENUM(
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ),
         allowNull: false,
       },
       userId: {
@@ -41,6 +47,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Payrolls");
+    await queryInterface.dropTable("Schedules");
   },
 };

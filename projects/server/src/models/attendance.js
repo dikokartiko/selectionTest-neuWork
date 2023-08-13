@@ -1,4 +1,3 @@
-//models/attendance.js
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./user");
@@ -21,6 +20,26 @@ const Attendance = sequelize.define("Attendance", {
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
+  },
+  ontime: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  lateClockin: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  earlyClockOut: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  absent: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
 });
 

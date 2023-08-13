@@ -23,7 +23,9 @@ const Schedule = sequelize.define("Schedule", {
       "Tuesday",
       "Wednesday",
       "Thursday",
-      "Friday"
+      "Friday",
+      "Saturday",
+      "Sunday"
     ),
     allowNull: false,
   },

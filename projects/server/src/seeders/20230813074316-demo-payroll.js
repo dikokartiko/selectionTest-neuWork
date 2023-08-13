@@ -2,19 +2,19 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("payrolls", [
+    await queryInterface.bulkInsert("Payrolls", [
       {
+        deductionName: "lateClockin",
+        deductionTotal: 10000,
+        payday: new Date(),
         userId: 1,
-        salaryId: 1,
-      },
-      {
-        userId: 2,
-        salaryId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("payrolls", null, {});
+    await queryInterface.bulkDelete("Payrolls", null, {});
   },
 };
