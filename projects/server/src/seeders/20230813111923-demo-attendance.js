@@ -1,57 +1,35 @@
+// seeders/20230813111923-demo-attendance.js
 "use strict";
 
-const getRandomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getWorkingDays = (startDate, endDate) => {
-  const workingDays = [];
-  let currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    const dayOfWeek = currentDate.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      workingDays.push(new Date(currentDate));
-    }
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return workingDays;
+const getRandomDate = (year) => {
+  const start = new Date(year, 0, 1);
+  const end = new Date(year + 1, 0, 1);
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
 };
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const attendanceData = [];
-    const startDate = new Date();
-    const endDate = new Date();
-    endDate.setMonth(endDate.getMonth() + 2);
-    const workingDays = getWorkingDays(startDate, endDate);
-
-    for (let i = 1; i <= 10; i++) {
-      for (const date of workingDays) {
-        const clockIn = getRandomInt(0, 1) ? "09:00" : "10:00";
-        const clockOut = getRandomInt(0, 1) ? "17:00" : "16:00";
-        const lateClockin = clockIn === "10:00" ? 1 : 0;
-        const earlyClockOut = clockOut === "16:00" ? 1 : 0;
-        const absent = i === 1 && date.getDay() === 1 ? 1 : 0;
-
+    for (let i = 2; i <= 3; i++) {
+      for (let j = 0; j < 10; j++) {
+        const date = getRandomDate(2023);
         attendanceData.push({
-          clockIn,
-          clockOut,
-          date,
-          ontime: lateClockin === 0 && earlyClockOut === 0 ? 1 : 0,
-          lateClockin,
-          earlyClockOut,
-          absent,
+          clockIn: "09:00:00",
+          clockOut: "17:00:00",
+          date: date.toISOString().split("T")[0],
+          ontime: true,
+          lateClockin: false,
+          earlyClockOut: false,
+          absent: false,
           userId: i,
-          scheduleId: i,
           createdAt: new Date(),
           updatedAt: new Date(),
         });
       }
     }
-
-    await queryInterface.bulkInsert("Attendances", attendanceData);
+    await queryInterface.bulkInsert("Attendances", attendanceData, {});
   },
 
   down: async (queryInterface, Sequelize) => {

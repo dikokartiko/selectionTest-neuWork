@@ -32,12 +32,12 @@ const createSchedule = async (req, res) => {
 };
 
 const getSchedule = async (req, res) => {
-  const { userId, day, clockIn, sort } = req.query;
+  const { userId, day, sort } = req.query;
 
   try {
     // Find the schedules
     const schedules = await Schedule.findAll({
-      where: { userId, workday: day, clockIn },
+      where: { userId, workday: day },
       order: sort ? [[sort, "ASC"]] : [],
     });
 

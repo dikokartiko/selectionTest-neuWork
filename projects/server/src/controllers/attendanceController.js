@@ -1,4 +1,4 @@
-const { Attendance, Schedule } = require("../models");
+const { Attendance, Schedule, User } = require("../models");
 const days = [
   "Sunday",
   "Monday",
@@ -113,15 +113,26 @@ const clockOut = async (req, res) => {
 
 const getAttendanceHistory = async (req, res) => {
   const { userId } = req;
+  const { sortOrder, orderBy } = req.query;
 
   try {
     // Find the user's attendance history
     const attendanceHistory = await Attendance.findAll({
       where: { userId },
-      order: [["date", "ASC"]],
+      order: [[orderBy || "attendanceId", sortOrder || "DESC"]],
     });
 
     res.status(200).json({ attendanceHistory });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getAttendanceReport = async (req, res) => {
+  const { userId, startDate, endDate } = req.params;
+  try {
+    const report = await getAttendanceReport(userId, startDate, endDate);
+    res.status(200).json(report);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -131,4 +142,5 @@ module.exports = {
   clockIn,
   clockOut,
   getAttendanceHistory,
+  getAttendanceReport,
 };
