@@ -1,3 +1,4 @@
+// controller/payrollcontroller
 const { Payroll, Attendance, Salary } = require("../models");
 const { Op } = require("sequelize");
 

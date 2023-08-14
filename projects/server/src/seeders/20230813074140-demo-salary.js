@@ -6,10 +6,20 @@ module.exports = {
       {
         amount: 5000000,
         userId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         amount: 3000000,
         userId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        amount: 5000000,
+        userId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },

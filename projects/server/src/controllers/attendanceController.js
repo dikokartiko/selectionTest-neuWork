@@ -8,6 +8,7 @@ const days = [
   "Friday",
   "Saturday",
 ];
+
 const clockIn = async (req, res) => {
   const { userId } = req;
   const { time } = req.body;
@@ -53,6 +54,12 @@ const clockIn = async (req, res) => {
         { lateClockin: 1 },
         { where: { attendanceId: attendanceRes.attendanceId } }
       );
+    } else {
+      // If the user is not late, set ontime to true
+      await Attendance.update(
+        { ontime: 1 },
+        { where: { attendanceId: attendanceRes.attendanceId } }
+      );
     }
 
     res.status(201).json({ message: "Clocked in successfully" });
@@ -91,7 +98,7 @@ const clockOut = async (req, res) => {
     const schedule = await Schedule.findOne({
       where: { scheduleId: attendance.scheduleId },
     });
-    if (attendance.clockOut < schedule.clockOut) {
+    if (time < schedule.clockOut) {
       await Attendance.update(
         { earlyClockOut: 1 },
         { where: { attendanceId: attendance.attendanceId } }
