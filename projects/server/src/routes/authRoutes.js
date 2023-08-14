@@ -6,6 +6,7 @@ const {
   resetPassword,
   setSalary,
   keepLogin,
+  getAllEmployee,
 } = require("../controllers/auth");
 const { registerValidation } = require("../middleware/register");
 const isAdmin = require("../middleware/isAdmin");
@@ -21,4 +22,6 @@ router.patch("/reset-password/:token", passwordValidation, resetPassword);
 router.patch("/set-salary/:userId", isAdmin, setSalary);
 
 router.get("/", keepLogin);
+
+router.get("/all", isAdmin, getAllEmployee);
 module.exports = router;

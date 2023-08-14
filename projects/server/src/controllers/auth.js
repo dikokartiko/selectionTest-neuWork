@@ -63,7 +63,7 @@ const register = async (req, res) => {
       await User.update({ token }, { where: { userId: user.userId } });
 
       const subject = "Welcome to the Company!";
-      const text = `Dear ${fullname},\n\nWelcome to the company! As a new employee, you are required to set a new password for your account. Please follow this link to set your new password: ${process.env.BASE_URL}/reset-password/${token}\n\nPlease note that this link can only be used once. If you need to reset your password again in the future, please contact an administrator.\n\nBest regards,\nThe Company`;
+      const text = `Dear ${fullname},\n\nWelcome to the company! As a new employee, you are required to set a new password for your account. Please follow this link to set your new password: http://localhost:3000/reset-password/${token}\n\nPlease note that this link can only be used once. If you need to reset your password again in the future, please contact an administrator.\n\nBest regards,\nThe Company`;
 
       sendMail(email, subject, text);
     }
@@ -173,10 +173,25 @@ const keepLogin = async (req, res) => {
   }
 };
 
+const getAllEmployee = async (req, res) => {
+  try {
+    const employee = await User.findAll({
+      where: { roleId: 2 },
+      include: Role,
+    });
+    res.send(employee);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ error: "An error occurred while getting the employee" });
+  }
+};
+
 module.exports = {
   register,
   login,
   resetPassword,
   setSalary,
   keepLogin,
+  getAllEmployee,
 };
